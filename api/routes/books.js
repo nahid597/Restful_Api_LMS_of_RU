@@ -53,31 +53,48 @@ router.post('/', (req, res, next) => {
 
 router.get('/:booksid', (req, res, next) => {
 
-    const url = req.params.booksid;
+    const id = req.params.booksid;
 
-    console.log(url);
+    //console.log(id);
 
-    if (url == 'Total Number of books') {
-        res.status(200).json({
-            message: "Total Number of books are 400000 approximately"
-        })
-    }
-
-    if (url == 'Number of avaiable books') {
-        res.status(200).json({
-            message: "Number of avaiable books are 200000 approximately"
-        })
-    }
-
-    if (url == 'How many number of books you are borred') {
-        res.status(200).json({
-                message: "Total Number of books you are borred 40 maximum"
+    Books.findById(id)
+        .exec()
+        .then(doc => {
+            console.log(doc);
+            res.status(200).json({
+                message: doc
             })
-            // } else {
-            //     res.status(200).json({
-            //         message: "url is incorrect.please enter correct url"
-            //     })
-    }
+
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                eroor: err
+            })
+        });
+
+
+    // if (url == 'Total Number of books') {
+    //     res.status(200).json({
+    //         message: "Total Number of books are 400000 approximately"
+    //     })
+    // }
+
+    // if (url == 'Number of avaiable books') {
+    //     res.status(200).json({
+    //         message: "Number of avaiable books are 200000 approximately"
+    //     })
+    // }
+
+    // if (url == 'How many number of books you are borred') {
+    //     res.status(200).json({
+    //             message: "Total Number of books you are borred 40 maximum"
+    //         })
+    //         // } else {
+    //         //     res.status(200).json({
+    //         //         message: "url is incorrect.please enter correct url"
+    //         //     })
+    // }
 
 
 })
