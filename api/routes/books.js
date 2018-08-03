@@ -6,14 +6,20 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => {
 
-    res.status(200).json({
+    Books.find()
+        .exec()
+        .then(doc => {
+            res.status(200).json({
 
-        item1: " Total Number of books ? ",
-        item2: " Number of avaiable books ? ",
-        item3: " How many number of books you are borred ? ",
-        item4: " Which books are avaiable ? ",
+                message: doc
 
-    })
+            })
+        })
+        .catch(err => {
+            error: err
+        });
+
+
 });
 
 router.post('/', (req, res, next) => {
@@ -40,7 +46,6 @@ router.post('/', (req, res, next) => {
     books.save()
         .then(result => {
 
-            console.log(result)
         })
         .catch(err => {
             console.log(err)
@@ -60,10 +65,17 @@ router.get('/:booksid', (req, res, next) => {
     Books.findById(id)
         .exec()
         .then(doc => {
-            console.log(doc);
-            res.status(200).json({
-                message: doc
-            })
+
+            if (doc) {
+                res.status(200).json({
+                    message: doc
+                })
+
+            } else {
+                res.status(200).json({
+                    message: "Data is not exists for this id"
+                })
+            }
 
         })
         .catch(err => {
@@ -102,16 +114,59 @@ router.get('/:booksid', (req, res, next) => {
 
 router.patch('/:booksid', (req, res, next) => {
 
-    res.status(200).json({
-        message: "update information"
-    })
+    const id = req.params.booksid;
+    console.log(id)
+
+    Books.findByIdAndUpdate({ _id: id }, req.body)
+        .then(doc => {
+            res.status(200).json({
+                message: doc
+            })
+        })
+        .catch(err => {
+            res.status(404).json({
+                error: err
+            })
+        });
+
+    // const updateops = {};
+
+    // for (const ops of req.body) {
+    //     updateops[ops.propName] = ops.value;
+    // }
+
+    // Books.update({ _id: id }, { $set: updateops })
+    //     .exec()
+    //     .then(doc => {
+    //         res.status(200).json({
+    //             message: doc
+    //         })
+    //     })
+    //     .catch(err => {
+    //         res.status(404).json({
+    //             error: err
+    //         })
+    //     });
+
 })
 
 router.delete('/:booksid', (req, res, next) => {
 
-    res.status(200).json({
-        message: "delete information"
-    })
+    const id = req.params.booksid;
+
+    Books.remove({ _id: id })
+        .exec()
+        .then(doc => {
+            res.status(200).json({
+                message: doc
+            })
+        })
+        .catch(err => {
+            res.status(404).json({
+                error: err
+            })
+        });
+
 })
 
 
