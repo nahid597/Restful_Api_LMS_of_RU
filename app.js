@@ -1,9 +1,17 @@
 const express = require('express');
 const bodyparser = require('body-parser');
+const mongoose = require('mongoose');
 
 const app = express();
 
 const booksrouter = require('./api/routes/books');
+
+//mongoose.connect("mongodb://nahid597:nahid123@ds145118.mlab.com:45118/ru_web");
+
+mongoose.connect("mongodb://localhost/ru_web");
+
+mongoose.Promise = global.Promise;
+
 
 app.use(bodyparser.urlencoded({ extended: false }));
 

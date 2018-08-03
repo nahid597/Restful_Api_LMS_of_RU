@@ -1,4 +1,6 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const Books = require('../models/books');
 
 const router = express.Router();
 
@@ -16,17 +18,34 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
 
-    const books = {
+    // const books = {
 
-        // booksId: req.body.booksId,
-        // name: req.body.name
+    //     // booksId: req.body.booksId,
+    //     // name: req.body.name
 
-        Total_Number_of_books: req.body.Total_Number_of_books,
-        Number_of_avaiable_books: req.body.Number_of_avaiable_books,
-        How_many_number_of_books_you_are_borred: req.body.How_many_number_of_books_you_are_borred,
-        Which_books_are_avaiable: req.body.Which_books_are_avaiable
+    //     Total_Number_of_books: req.body.Total_Number_of_books,
+    //     Number_of_avaiable_books: req.body.Number_of_avaiable_books,
+    //     How_many_number_of_books_you_are_borred: req.body.How_many_number_of_books_you_are_borred,
+    //     Which_books_are_avaiable: req.body.Which_books_are_avaiable
 
-    };
+    // };
+
+    const books = new Books({
+        _id: new mongoose.Types.ObjectId(),
+        key: req.body.key,
+        values: req.body.values
+
+    });
+
+    books.save()
+        .then(result => {
+
+            console.log(result)
+        })
+        .catch(err => {
+            console.log(err)
+        });
+
     res.status(200).json({
         message: books
     })
