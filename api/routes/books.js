@@ -16,7 +16,10 @@ router.get('/', (req, res, next) => {
             })
         })
         .catch(err => {
-            error: err
+            console.log(err);
+            res.status(500).json({
+                eroor: err
+            })
         });
 
 
@@ -24,17 +27,6 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
 
-    // const books = {
-
-    //     // booksId: req.body.booksId,
-    //     // name: req.body.name
-
-    //     Total_Number_of_books: req.body.Total_Number_of_books,
-    //     Number_of_avaiable_books: req.body.Number_of_avaiable_books,
-    //     How_many_number_of_books_you_are_borred: req.body.How_many_number_of_books_you_are_borred,
-    //     Which_books_are_avaiable: req.body.Which_books_are_avaiable
-
-    // };
 
     const books = new Books({
         _id: new mongoose.Types.ObjectId(),
@@ -46,14 +38,18 @@ router.post('/', (req, res, next) => {
     books.save()
         .then(result => {
 
+            res.status(200).json({
+                message: books
+            })
         })
         .catch(err => {
-            console.log(err)
+            console.log(err);
+            res.status(500).json({
+                eroor: err
+            })
         });
 
-    res.status(200).json({
-        message: books
-    })
+
 });
 
 router.get('/:booksid', (req, res, next) => {
@@ -73,12 +69,6 @@ router.get('/:booksid', (req, res, next) => {
         .exec()
         .then(doc => {
 
-            // if (query != id) {
-            //     res.status(200).json({
-            //         message: "Url is not correct.please enter correct url to find data"
-            //     })
-
-            // }
             if (doc) {
                 res.status(200).json({
                     message: doc
@@ -99,41 +89,18 @@ router.get('/:booksid', (req, res, next) => {
         });
 
 
-    // if (url == 'Total Number of books') {
-    //     res.status(200).json({
-    //         message: "Total Number of books are 400000 approximately"
-    //     })
-    // }
-
-    // if (url == 'Number of avaiable books') {
-    //     res.status(200).json({
-    //         message: "Number of avaiable books are 200000 approximately"
-    //     })
-    // }
-
-    // if (url == 'How many number of books you are borred') {
-    //     res.status(200).json({
-    //             message: "Total Number of books you are borred 40 maximum"
-    //         })
-    //         // } else {
-    //         //     res.status(200).json({
-    //         //         message: "url is incorrect.please enter correct url"
-    //         //     })
-    // }
-
-
 })
 
 
 router.patch('/:booksid', (req, res, next) => {
 
     const id = req.params.booksid;
-    console.log(id)
+    //console.log(id)
 
     Books.findByIdAndUpdate({ _id: id }, req.body)
         .then(doc => {
             res.status(200).json({
-                message: doc
+                message: "update successfully."
             })
         })
         .catch(err => {
@@ -142,24 +109,6 @@ router.patch('/:booksid', (req, res, next) => {
             })
         });
 
-    // const updateops = {};
-
-    // for (const ops of req.body) {
-    //     updateops[ops.propName] = ops.value;
-    // }
-
-    // Books.update({ _id: id }, { $set: updateops })
-    //     .exec()
-    //     .then(doc => {
-    //         res.status(200).json({
-    //             message: doc
-    //         })
-    //     })
-    //     .catch(err => {
-    //         res.status(404).json({
-    //             error: err
-    //         })
-    //     });
 
 })
 
@@ -173,7 +122,7 @@ router.delete('/:booksid', (req, res, next) => {
         .exec()
         .then(doc => {
             res.status(200).json({
-                message: doc
+                message: "delete successfully."
             })
         })
         .catch(err => {
