@@ -59,13 +59,26 @@ router.post('/', (req, res, next) => {
 router.get('/:booksid', (req, res, next) => {
 
     const id = req.params.booksid;
-
     //console.log(id);
 
-    Books.findById(id)
+    console.log(id);
+    // var rudb = db.db("ru_web");
+
+    var query = {
+        key: id
+    }
+
+
+    Books.find(query)
         .exec()
         .then(doc => {
 
+            // if (query != id) {
+            //     res.status(200).json({
+            //         message: "Url is not correct.please enter correct url to find data"
+            //     })
+
+            // }
             if (doc) {
                 res.status(200).json({
                     message: doc
