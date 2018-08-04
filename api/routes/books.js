@@ -167,6 +167,8 @@ router.delete('/:booksid', (req, res, next) => {
 
     const id = req.params.booksid;
 
+    /// remove from database
+
     Books.remove({ _id: id })
         .exec()
         .then(doc => {
