@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const app = express();
 
 const booksrouter = require('./api/routes/books');
+const timerouter = require('./api/routes/time');
+
 
 //mongoose.connect("mongodb://nahid597:nahid123@ds145118.mlab.com:45118/ru_web");
 
@@ -33,6 +35,7 @@ app.use((req, res, next) => {
 })
 
 app.use('/books', booksrouter);
+app.use('/timeschedule', timerouter);
 
 app.use((req, res, next) => {
 
