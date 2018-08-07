@@ -6,6 +6,8 @@ const app = express();
 
 const booksrouter = require('./api/routes/books');
 const timerouter = require('./api/routes/time');
+const newarrival = require('./api/routes/new_arrival');
+//const category = require('./api/routes/category');
 
 
 //mongoose.connect("mongodb://nahid597:nahid123@ds145118.mlab.com:45118/ru_web");
@@ -36,6 +38,8 @@ app.use((req, res, next) => {
 
 app.use('/books', booksrouter);
 app.use('/timeschedule', timerouter);
+app.use('/newarrival', newarrival);
+//app.use('/department', category);
 
 app.use((req, res, next) => {
 
